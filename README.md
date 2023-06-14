@@ -1,14 +1,15 @@
-Beyond gOOD: Spreadsheet Editor in Java
+# Beyond gOOD: Spreadsheet Editor in Java
 
-Usage:
+## Usage:
+`java -jar build/beyondgood.jar <args>`
 
-java -jar beyondgood.jar <args>
-
-Arguments:
+## Arguments:
+```
 -edit
 -gui
+```
 
-Design Changes:
+## Design Changes:
 
 SpreadsheetVisualView was completely redesigned through the usage of JTable, as it is a flexible choice that can be used 
 for the visual (read-only) view and the editor view.
