@@ -1,0 +1,61 @@
+Assignment 8 - Provider Review
+Benjamin Wakefield
+
+Design Critique
+
+The only interface that I was provided with was the IView interface, which is implemented by the providers various view implementations. 
+However, the interface does not contain any methods that are being used in the view implementations, rendering it practically useless 
+other than to keep the view implementations of the same type. The providers design is dependent on the JTable class in the Java Swing 
+library, coupled with a Controller class with various listeners. In order to initialize the provider's editor view, a new instance of 
+a Controller containing a GraphicView must be instantiated, which somewhat defeats the purpose of the interface to generalize the view 
+implementations. Currently, the design only contains two view implementations: GraphicView and TextualView. GraphicView renders an 
+un-editable view of a spreadsheet, and TextualView appends a spreadsheet in textual format to an Appendable. Based on my understanding 
+of the design, in order to make the GraphicView editable one must pass it as an argument to an instance of a Controller in the main method. 
+However, it would be more beneficial to create another class, possibly called EditorView, that handles adding editing functionality to a 
+graphical view. This would give the IView interface more relevance, and it would make the Controller implementation more flexible. Furthermore, 
+the mentioned Controller class only works for a GraphicView and does not have a parent controller interface, which causes the design to be 
+very inflexible. If another controllable view was to be implemented, there would be no basis for the new controller and it would need to be 
+built from the ground up. Lastly, the controller uses listener implementations including MyAdjustmentListener, MyButtonListener, MyKeyListener, 
+and MyMouseListener. However, MyKeyListener is used nowhere in the design and is not necessary to track user keyboard input, thus it should be removed. 
+Overall, despite the fact that it is functional and works well on the user-end, the design is definitely not as flexible as it could be and should be 
+refactored to use meaningful and flexible interfaces for the view and the controller.
+
+Implementation Critique
+
+The GraphicView and TextualView are very capable of displaying a data model. The TextualView functions with no errors, and the GraphicView displays 
+a useable editor environment for creating, reading, updating, or deleting data in a model. The GraphicView is able to scroll infinitely in both the
+vertical and horizontal directions, and cells in these regions can be edited. Additionally, if a cell is modified, any affected cells in the worksheet
+are updated immediately. Cells also display their data properly for each datatype, including Strings, Doubles, Booleans, and Functions, with all cells
+being evaluated properly. If data is inputted, the worksheet is able to detect which datatype is being entered so it can be rendered properly.
+In order to use the provider view implementations with my own model, I created two adapter classes to port necessary methods from the implemenations 
+in my model to the methods used in the provider's views. The first adapter, called Content, unfortunately is empty as it only serves to distinguish 
+the content of a Cell and no methods are called on it in thenprovider's code. The second adapter, called WorksheetModel, takes in a SpreadsheetModel 
+from my own model design and ports the methods from SpreadsheetModel to the WorksheetModel class used in the provider's views. Only four methods
+were needed, including:
+HashMap getSheet(), which returns the grid of Coords mapped to their respective Cells in a SpreadsheetModel.
+String getValue(Coord coord), which returns the evaluated CellContent of the Cell at the given Coord.
+void setCell(Coord clickedPos, String text), which updates the CellContent of the Cell at the given Coord with the given parseable contents.
+String readCell(Coord coord), which returns the raw CellContent of the cell at the given Coord as a String.
+These methods serve to provide the view with information from the model to allow it to display and edit the data stored in the model. Overall, it was
+very convenient to reuse the provider's code, as their view design is built around JTable, which causes it to be very similar to my own view design.
+The one major difference between our designs is that the provider's chose to use listeners to handle cell editing, while I chose to use custom
+implementations of JTable CellEditor and CellRenderer. This allowed for only a few adaptations to be made on my end, with no changes to be made
+on their end, resulting in a fully functional grapical editor.
+
+Documentation Critique
+
+Overall, the provider's code is mediocre in terms of cleanliness. Although every interface, class, and public method has Javadoc documentation, this
+documentation is usually inadequate (largely only one sentence even if more information is necessary) in terms of understanding the purpose of the code.
+Although it doesn't detract from the meaning of the documentation, there are an abundance of spelling and grammar errors in the Javadoc documentation
+that certainly detracts from the cleanliness and legibility of the code. For example, on Line 22 in GraphicView.java, the documentation refers to a
+"spreasheet" instead of the more appropriate "WorksheetModel". Furthermore, the code contains sections of commented-out code in various classes,
+which also detracts from the cleanliness of the code. Although it may be helpful to comment-out old code ideas while building the program, the final
+program should not contain large sections of meaningless code. For example, from Lines 139 to 232 in MyTableModel, the code contains a complete alternate 
+declaration of the MyTableModel class and its contents, which should be removed once the class is finalized in its working state. Commented-out lines of
+code within existing methods is also abundant and should be removed once the method is functioning correctly.
+
+Design/Code Limitations & Requested Changes
+
+Fortunately, I did not need to request any changes from my providers, and their views are functioning correctly as-is with my model. The synthesis was not
+perfect at first, which is the reason why I needed to create adapter classes, but those adapter classes are quite light in terms of what they need to
+translate between my model and the model used in the provider's design.

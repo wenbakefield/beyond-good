@@ -1,0 +1,23 @@
+Assignment 8 – Reflection
+Benjamin Wakefield
+
+Lessons Learned
+What do you wish you had done differently in your design/implementation?
+Did you learn any lessons from the code given to you, or the updates you had to make for your customers?
+
+I wish I had used the Factory pattern to create both different types of views as well as different types of CellContents, as they are currently directly instantiated in my main
+method. I also wish I had used a different mechanism for creating new rows and columns in the spreadsheet to allow for seamless scrolling, as my view
+currently requires the user to navigate to the Edit menu to add new rows or columns. Furthermore, I wish I had used a different mechanism for my
+implementation of JTable's CellEditor, as it currently creates a Pop-up window that takes user input and passes it into the selected cell. My provider was
+able to accomplish the constantly shown editor text box above the spreadsheet using listeners and a controller, neither of which I utilized in my
+design, and both of which I should've utilized.
+
+My customers had many questions concerning my design, which leads me to believe that my documentation was not adequate. Additionally, my customers notified
+me that I used an instanceof check in my EvaluatedCellRenderer class to verify that a Cell contained a String so that it could be formatted correctly for
+the view. I updated this code to check the contents using a pattern instead of a concrete class check as to make it more adaptable.
+
+Provider Experience
+My experience was very pleasant with my providers. They provided me with their code the day after I requested it from them. Despite the files being incorrectly formatted at first,
+I contacted my providers, showed them screenshots of the issue, and they sent me the correct files within an hour. Lastly, I sent them a question concerning
+their Controller class and how it was used to display the editor view, and they responded to me immediately explaining how the class was used in their main
+method to initialize the view.

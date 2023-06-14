@@ -1,0 +1,22 @@
+A1 5
+A2 0
+A3 42
+A4 68
+D1 =(SUM A3 A4)
+A5 108
+B1 "hi"
+B2 "soylent green"
+B3 "!@#$%^&*()_+}{:?><\\|,./;'[]=-`~"
+B4 "123456789"
+B5 "Jack says hi. Jill has one backslash here."
+C1 true
+C2 false
+C3 -5
+C4 100000
+C5 =(CONCAT A1 A4 B2 C1 D1)
+D2 =(PRODUCT (SUM C2:C3) (SUM A1 A3))
+D3 =(< D2 D1)
+D4 =(< D1 D2)
+D5 =(CONCAT A1:B5)
+AA24 72
+A103 103
